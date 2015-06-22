@@ -9,7 +9,7 @@ class Solution:
         s = 0
         while n:
             s += n % 2
-            n = int(n/2)
+            n = n/2
         return s
 
 
