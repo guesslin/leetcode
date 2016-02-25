@@ -12,9 +12,6 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        def travel(node):
-            if node is None:
-                return 0
-            return max(1+travel(node.left), 1+travel(node.right))
-
-        return travel(root)
+        if root is None:
+            return 0
+        return max(self.maxDepth(root.left), self.maxDepth(root.right))+1
