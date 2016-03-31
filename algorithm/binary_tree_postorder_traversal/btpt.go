@@ -17,34 +17,75 @@ func Peek(stack []*TreeNode) *TreeNode {
 	return nil
 }
 
+func print_s(stack []*TreeNode) {
+	for _, s := range stack {
+		fmt.Printf("%d ", s.Val)
+	}
+	fmt.Printf("\n")
+}
+
 // postorderTraversal traversal tree in right-left-middle sequence
 func postorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
-	s := make([]*TreeNode, 0)
-	ans := make([]int, 0)
+	var stack []*TreeNode
+	var ans []int
 	for {
 		for root != nil {
 			if root.Right != nil {
-				s = append(s, root.Right)
+				stack = append(stack, root.Right)
 			}
-			s = append(s, root)
+			stack = append(stack, root)
 			root = root.Left
 		}
-		root, s = s[len(s)-1], s[:len(s)-1]
-		if root.Right != nil && Peek(s) == root.Right {
-			s = s[:len(s)-1]
-			s = append(s, root)
+		root, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		if root.Right != nil && Peek(stack) == root.Right {
+			stack = stack[:len(stack)-1]
+			stack = append(stack, root)
 			root = root.Right
 		} else {
 			ans = append(ans, root.Val)
 			root = nil
 		}
-		if len(s) == 0 {
+		if len(stack) == 0 {
 			break
 		}
 
+	}
+	return ans
+}
+
+func inorderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	var stack []*TreeNode
+	var ans []int
+	for {
+		for root != nil {
+			if root.Right != nil {
+				stack = append(stack, root.Right)
+			}
+			stack = append(stack, root)
+			root = root.Left
+		}
+		root, stack = stack[len(stack)-1], stack[:len(stack)-1]
+
+		// root.Left will be nil, so put root.Val into ans
+		ans = append(ans, root.Val)
+
+		// check if root.Right has something, then keep going with it
+		if root.Right != nil && Peek(stack) == root.Right {
+			stack = stack[:len(stack)-1]
+			root = root.Right
+			continue
+		} else {
+			root = nil
+		}
+		if len(stack) == 0 {
+			break
+		}
 	}
 	return ans
 }
@@ -63,5 +104,6 @@ func main() {
 	n2.Left = &n4
 	n1.Right = &n3
 	n1.Left = &n2
-	fmt.Println(postorderTraversal(&n1))
+	fmt.Printf("PostOrder Traversal: %v\n", postorderTraversal(&n1))
+	fmt.Printf("InOrder Traversal: %v\n", inorderTraversal(&n1))
 }
