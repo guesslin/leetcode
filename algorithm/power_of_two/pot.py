@@ -5,6 +5,4 @@ class Solution(object):
         :rtype: bool
         """
         pot = [2**x for x in xrange(64)]
-        if n in pot:
-            return True
-        return False
+        return n in pot
