@@ -24,8 +24,7 @@ func print_s(stack []*TreeNode) {
 	fmt.Printf("\n")
 }
 
-// postorderTraversal traversal tree in right-left-middle sequence
-func postorderTraversal(root *TreeNode) []int {
+func inorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
@@ -40,18 +39,21 @@ func postorderTraversal(root *TreeNode) []int {
 			root = root.Left
 		}
 		root, stack = stack[len(stack)-1], stack[:len(stack)-1]
+
+		// root.Left will be nil, so put root.Val into ans
+		ans = append(ans, root.Val)
+
+		// check if root.Right has something, then keep going with it
 		if root.Right != nil && Peek(stack) == root.Right {
 			stack = stack[:len(stack)-1]
-			stack = append(stack, root)
 			root = root.Right
+			continue
 		} else {
-			ans = append(ans, root.Val)
 			root = nil
 		}
 		if len(stack) == 0 {
 			break
 		}
-
 	}
 	return ans
 }
@@ -70,5 +72,5 @@ func main() {
 	n2.Left = &n4
 	n1.Right = &n3
 	n1.Left = &n2
-	fmt.Printf("PostOrder Traversal: %v\n", postorderTraversal(&n1))
+	fmt.Printf("InOrder Traversal: %v\n", inorderTraversal(&n1))
 }
