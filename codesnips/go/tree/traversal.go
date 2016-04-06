@@ -94,3 +94,29 @@ func PreorderTraversal(root *TreeNode) []int {
 	}
 	return ans
 }
+
+// postorder use two stack
+func postorder(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	s := make([]*TreeNode, 0, 16)
+	o := make([]*TreeNode, 0, 16)
+	ans := make([]int, 0, 16)
+	s = append(s, root)
+	for len(s) != 0 {
+		root, s = s[len(s)-1], s[:len(s)-1]
+		o = append(o, root)
+		if root.Left != nil {
+			s = append(s, root.Left)
+		}
+		if root.Right != nil {
+			s = append(s, root.Right)
+		}
+	}
+	for len(o) != 0 {
+		root, o = o[len(o)-1], o[:len(o)-1]
+		ans = append(ans, root.Val)
+	}
+	return ans
+}
