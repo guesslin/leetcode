@@ -9,30 +9,11 @@ func mySqrt(x int) int {
 	if x <= 1 {
 		return x
 	}
-	y := float64(x)
-	xn := float64(x)
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	xn = (xn + (y / xn)) / 2
-	return int(xn)
-
+	xn := x
+	for xn*xn > x {
+		xn = (xn + (x / xn)) / 2
+	}
+	return xn
 }
 
 func main() {
