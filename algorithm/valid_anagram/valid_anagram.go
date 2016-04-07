@@ -10,6 +10,9 @@ func isAnagram(s string, t string) bool {
 	} else if s == "" || t == "" {
 		return false
 	}
+	if len(s) != len(t) {
+		return false
+	}
 	var dict [26]int
 	for _, c := range s {
 		dict[c-97] += 1
