@@ -9,7 +9,7 @@ func mySqrt(x int) int {
 	if x <= 1 {
 		return x
 	}
-	xn := x
+	xn := x / 2
 	for xn*xn > x {
 		xn = (xn + (x / xn)) / 2
 	}
