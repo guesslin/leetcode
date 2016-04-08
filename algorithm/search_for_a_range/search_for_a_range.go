@@ -5,35 +5,30 @@ import (
 )
 
 func searchRange(nums []int, target int) []int {
-	fmt.Println(nums, target)
-	if len(nums) == 0 {
-		return []int{-1, -1}
-	}
-	if target < nums[0] || target > nums[len(nums)-1] {
-		return []int{-1, -1}
-	}
-	left, right := 0, len(nums)-1
-	ptr := (left + right) / 2
-	for nums[ptr] != target {
-		if left == right {
-			return []int{-1, -1}
-		}
-		if nums[ptr] > target {
-			right = ptr
-			ptr = (left + right) / 2
+	notFound := []int{-1, -1}
+	l, r := 0, len(nums)-1
+	for l < r {
+		m := (l+r)/2 + 1
+		if nums[m] > target {
+			r = m - 1
 		} else {
-			left = ptr + 1
-			ptr = (left + right) / 2
+			l = m
 		}
 	}
-	mid := ptr
-	for mid = ptr; mid <= right && nums[mid] == target; mid++ {
+	if nums[r] != target {
+		return notFound
 	}
-	right = mid - 1
-	for mid = ptr; mid >= left && nums[mid] == target; mid-- {
+	right := r
+	l = 0
+	for l < r {
+		m := (l + r) / 2
+		if nums[m] < target {
+			l = m + 1
+		} else {
+			r = m
+		}
 	}
-	left = mid + 1
-	return []int{left, right}
+	return []int{l, right}
 }
 
 func main() {
