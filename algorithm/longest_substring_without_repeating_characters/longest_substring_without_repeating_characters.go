@@ -2,30 +2,33 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 func lengthOfLongestSubstring(s string) int {
-	s = strings.ToLower(s)
-	var result, current int
-	for i := 0; i < len(s); i++ {
-		seen := make(map[byte]bool)
-		current = 0
-		for j := i; j < len(s); j++ {
-			if seen[s[j]] == true {
-				break
+	l := len(s)
+	var seen [128]bool // ASCII range 0-127
+	var current, maxs, i, j int
+	for i = 0; i < l; i++ {
+		if seen[s[i]] {
+			for s[i] != s[j] {
+				seen[s[j]] = false
+				j++
 			}
-			seen[s[j]] = true
+			j++
+			current = i - j + 1
+		} else {
+			seen[s[i]] = true
 			current++
 		}
-		if current > result {
-			result = current
+		if current > maxs {
+			maxs = current
 		}
 	}
-	return result
+	return maxs
 }
 
 func main() {
+	fmt.Println(lengthOfLongestSubstring("pwwkew"))
 	fmt.Println(lengthOfLongestSubstring("abcabcaaa"))
 	fmt.Println(lengthOfLongestSubstring("bbbb"))
 	fmt.Println(lengthOfLongestSubstring("cdd"))
