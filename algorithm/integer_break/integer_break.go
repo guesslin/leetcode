@@ -5,11 +5,8 @@ import (
 )
 
 func integerBreak(n int) int {
-	if n == 2 {
-		return 1
-	}
-	if n == 3 {
-		return 2
+	if n <= 3 {
+		return n - 1
 	}
 	x := n / 3
 	remainder := n % 3
@@ -37,4 +34,6 @@ func main() {
 	for i := 2; i <= 13; i++ {
 		fmt.Printf("Number %d can break into max product %d\n", i, integerBreak(i))
 	}
+	num := 2321
+	fmt.Printf("Number %d can break into max product %d\n", num, integerBreak(num))
 }
