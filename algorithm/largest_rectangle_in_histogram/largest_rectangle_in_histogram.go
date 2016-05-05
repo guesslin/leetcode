@@ -4,29 +4,47 @@ import (
 	"fmt"
 )
 
+type stack []int
+
+func (s stack) Top() int {
+	return s[len(s)-1]
+}
+
 func largestRectangleArea(heights []int) int {
-	if len(heights) == 0 {
-		return 0
-	}
-	minHeight := heights[0]
-	index := 0
-	for i := 1; i < len(heights); i++ {
-		if minHeight > heights[i] {
-			minHeight = heights[i]
-			index = i
+	var s stack
+	maxArea := 0
+	i := 0
+	length := len(heights)
+	for i < length {
+		if len(s) == 0 || heights[s.Top()] <= heights[i] {
+			s = append(s, i)
+			i++
+		} else {
+			top := s.Top()
+			s = s[:len(s)-1]
+			wide := i
+			if len(s) != 0 {
+				wide = i - s.Top() - 1
+			}
+			tmpArea := heights[top] * wide
+			if maxArea < tmpArea {
+				maxArea = tmpArea
+			}
 		}
 	}
-	left := largestRectangleArea(heights[:index])
-	right := largestRectangleArea(heights[index+1:])
-	mid := minHeight * len(heights)
-	max := mid
-	if max < left {
-		max = left
+	for len(s) > 0 {
+		top := s.Top()
+		s = s[:len(s)-1]
+		wide := i
+		if len(s) != 0 {
+			wide = i - s.Top() - 1
+		}
+		tmpArea := heights[top] * wide
+		if maxArea < tmpArea {
+			maxArea = tmpArea
+		}
 	}
-	if max < right {
-		max = right
-	}
-	return max
+	return maxArea
 }
 
 func main() {
