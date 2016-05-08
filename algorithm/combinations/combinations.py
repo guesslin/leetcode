@@ -10,13 +10,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         from itertools import combinations
-        result = []
-
-        def add(x): return x+1
-        for c in list(combinations(range(n), k)):
-            result.append(map(add, c))
-
-        return result
+        return list(combinations([x+1 for x in xrange(n)], k))
 
 if __name__ == '__main__':
     s = Solution()
