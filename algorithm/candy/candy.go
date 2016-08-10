@@ -14,18 +14,14 @@ func candy(ratings []int) int {
 			count[i] = 1
 		}
 	}
+	c := count[len(ratings)-1]
 	for i := len(ratings) - 2; i >= 0; i-- {
 		if ratings[i] > ratings[i+1] && count[i] <= count[i+1] {
 			count[i] = count[i+1] + 1
 		}
+		c += count[i]
 	}
-	return func(s []int) int {
-		sum := 0
-		for _, c := range s {
-			sum += c
-		}
-		return sum
-	}(count)
+	return c
 }
 
 func main() {
