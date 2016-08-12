@@ -5,55 +5,54 @@ import (
 )
 
 func addBinary(a string, b string) string {
-	var result string
+	byteSliceA := reverse([]byte(a))
+	byteSliceB := reverse([]byte(b))
+	lenA, lenB := len(a), len(b)
+	result := make([]byte, 0, max(lenA, lenB)+1)
 	carry := 0
-	a = reverse(a)
-	b = reverse(b)
-	for i := 0; i < min(len(a), len(b)); i++ {
-		t := int(a[i]+b[i]) + carry - 96
+	for i := 0; i < min(lenA, lenB); i++ {
+		t := int(byteSliceA[i]+byteSliceB[i]) + carry - 96
 		if t >= 2 {
 			carry = 1
 			t = t - 2
 		} else {
 			carry = 0
 		}
-		result += string(t + 48)
+		result = append(result, byte(t+48))
 	}
-	if len(a) > len(b) {
-		for i := len(b); i < len(a); i++ {
-			t := int(a[i]) + carry - 48
+	if lenA > lenB {
+		for i := lenB; i < lenA; i++ {
+			t := int(byteSliceA[i]) + carry - 48
 			if t >= 2 {
 				carry = 1
 				t = t - 2
 			} else {
 				carry = 0
 			}
-			result += string(t + 48)
-
+			result = append(result, byte(t+48))
 		}
 	} else {
-		for i := len(a); i < len(b); i++ {
-			t := int(b[i]) + carry - 48
+		for i := lenA; i < lenB; i++ {
+			t := int(byteSliceB[i]) + carry - 48
 			if t >= 2 {
 				carry = 1
 				t = t - 2
 			} else {
 				carry = 0
 			}
-			result += string(t + 48)
-
+			result = append(result, byte(t+48))
 		}
 	}
 	if carry == 1 {
-		result += string("1")
+		result = append(result, '1')
 	}
-	return reverse(result)
+	return string(reverse(result))
 }
 
-func reverse(s string) string {
-	var result string
+func reverse(s []byte) []byte {
+	result := make([]byte, 0, len(s))
 	for i := len(s) - 1; i >= 0; i-- {
-		result += string(s[i])
+		result = append(result, s[i])
 	}
 	return result
 }
@@ -63,6 +62,13 @@ func min(x, y int) int {
 		return y
 	}
 	return x
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
 }
 
 func main() {
