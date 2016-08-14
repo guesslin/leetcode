@@ -5,11 +5,11 @@ import (
 )
 
 func reverseString(s string) string {
-	var r string
-	for _, c := range []rune(s) {
-		r = string(c) + r
+	r := make([]rune, 0, len(s))
+	for i := len(s) - 1; i >= 0; i-- {
+		r = append(r, rune(s[i]))
 	}
-	return r
+	return string(r)
 }
 
 func main() {
