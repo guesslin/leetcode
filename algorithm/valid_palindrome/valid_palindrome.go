@@ -10,13 +10,6 @@ func isPalindrome(s string) bool {
 	}
 	lower := toLower(s)
 	for i, j := 0, len(lower)-1; i <= j; i, j = i+1, j-1 {
-		for ; i < len(lower) && !isAlphaNumeric(lower[i]); i++ {
-		}
-		for ; j >= 0 && !isAlphaNumeric(lower[j]); j-- {
-		}
-		if i >= j {
-			return true
-		}
 		if lower[i] != lower[j] {
 			return false
 		}
@@ -25,12 +18,15 @@ func isPalindrome(s string) bool {
 }
 
 func toLower(s string) []byte {
-	res := make([]byte, len(s))
+	res := make([]byte, 0, len(s))
 	for i := 0; i < len(s); i++ {
+		if !isAlphaNumeric(s[i]) {
+			continue
+		}
 		if 'A' <= s[i] && s[i] <= 'Z' {
-			res[i] = s[i] - 'A' + 'a'
+			res = append(res, s[i]-'A'+'a')
 		} else {
-			res[i] = s[i]
+			res = append(res, s[i])
 		}
 	}
 	return res
