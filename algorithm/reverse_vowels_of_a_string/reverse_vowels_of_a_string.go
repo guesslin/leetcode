@@ -5,22 +5,17 @@ import (
 )
 
 func reverseVowels(s string) string {
-	stack := make([]byte, 0)
-	queue := make([]int, 0)
-	tmp := make([]byte, len(s))
-	for i, c := range []byte(s) {
-		tmp[i] = c
-		if isVowels(c) {
-			stack = append(stack, c)
-			queue = append(queue, i)
+	iter := []byte(s)
+	for i, j := 0, len(iter)-1; i < j; i, j = i+1, j-1 {
+		for i < j && !isVowels(iter[i]) {
+			i++
 		}
+		for j > i && !isVowels(iter[j]) {
+			j--
+		}
+		iter[i], iter[j] = iter[j], iter[i]
 	}
-	for ptr := 0; ptr < len(queue); ptr++ {
-		vowel := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		tmp[queue[ptr]] = vowel
-	}
-	return string(tmp)
+	return string(iter)
 }
 
 func isVowels(b byte) bool {
@@ -36,4 +31,7 @@ func isVowels(b byte) bool {
 
 func main() {
 	fmt.Println(reverseVowels("hello"))
+	fmt.Println(reverseVowels(" a"))
+	fmt.Println(reverseVowels("Aa"))
+	fmt.Println(reverseVowels(",."))
 }
