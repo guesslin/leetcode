@@ -8,15 +8,16 @@ func isIsomorphic(s string, t string) bool {
 	mapping := make(map[byte]byte)
 	for i := 0; i < len(s); i++ {
 		if mapping[s[i]] == 0 {
-			c := t[i]
-			for _, n := range mapping {
-				// if c is already mapping to other char
-				if c == n {
-					return false
-				}
-			}
-			mapping[s[i]] = c
+			mapping[s[i]] = t[i]
 		} else if mapping[s[i]] != t[i] {
+			return false
+		}
+	}
+	mapping2 := make(map[byte]byte)
+	for i := 0; i < len(t); i++ {
+		if mapping2[t[i]] == 0 {
+			mapping2[t[i]] = s[i]
+		} else if mapping2[t[i]] != s[i] {
 			return false
 		}
 	}
