@@ -5,20 +5,28 @@ import (
 )
 
 func firstUniqChar(s string) int {
-	words := make([]int, 26)
-	for _, c := range s {
-		words[int(c)-'a']++
+	if len(s) == 0 {
+		return -1
 	}
-	for i, c := range s {
-		if words[int(c)-'a'] == 1 {
-			return i
+	words := make([]int, 26)
+	slow := 0
+	n := len(s)
+	for i := 0; i < n; i++ {
+		w := int(s[i] - 'a')
+		words[w]++
+		if slow < n && words[int(s[slow]-'a')] > 1 {
+			for ; slow < n && words[int(s[slow]-'a')] > 1; slow++ {
+			}
 		}
 	}
-	return -1
+	if slow >= n {
+		return -1
+	}
+	return slow
 }
 
 func main() {
-	str := "leetcode"
+	str := "aadadaad"
 	fmt.Println(str)
 	fmt.Println(firstUniqChar(str))
 }
