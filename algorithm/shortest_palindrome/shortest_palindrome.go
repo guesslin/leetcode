@@ -11,26 +11,44 @@ func shortestPalindrome(s string) string {
 		return s
 	}
 	rev := reverse([]byte(s))
+	ori := []byte(s)
 	if compare(s, string(rev)) {
 		return s
 	}
-	lps := make([]int, n)
-	i, j := 1, 0
-	for i < n {
-		if rev[i] == s[j] {
-			j++
-			lps[i] = j
-			i++
-		} else {
-			if j == 0 {
-				i++
-			} else {
-				j = lps[j-1]
-			}
+	// build longest palindromic substring using Manacher's Algorithm
+	N := 2*n + 1
+	lps := make([]int, N)
+	lps[1] = 1
+	c, r := 0, 0
+	for i := 2; i < N; i++ {
+		mirror := 2*c - i
+		if i < r {
+			lps[i] = min(r-i, lps[mirror])
+		}
+		for lb, rb := i-lps[i]-1, i+lps[i]+1; (lb >= 0 && rb < N && rb/2 < n) && ((rb%2 == 0) || ori[(rb)/2] == ori[(lb)/2]); lb, rb = i-lps[i]-1, i+lps[i]+1 {
+			lps[i]++
+		}
+		if i+lps[i] > r {
+			c = i
+			r = lps[i] + i
 		}
 	}
-	suf := []byte(s)[lps[len(lps)-1]:]
+	// take longest palindromic substring from start
+	suffix := 0
+	for i := 1; i < N; i++ {
+		if lps[i] == i && i > suffix {
+			suffix = i
+		}
+	}
+	suf := []byte(s)[suffix:]
 	return string(append(rev, suf...))
+}
+
+func min(x, y int) int {
+	if x > y {
+		return y
+	}
+	return x
 }
 
 func compare(s1, s2 string) bool {
