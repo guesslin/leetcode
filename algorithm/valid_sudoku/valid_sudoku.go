@@ -5,48 +5,21 @@ import (
 )
 
 func isValidSudoku(board [][]byte) bool {
-	size := 9
+	var rows [9][9]int
+	var cols [9][9]int
+	var box [9][9]int
 	var pos int
-	// check row
-	for i := 0; i < size; i++ {
-		check := make([]int, size)
-		for j := 0; j < size; j++ {
-			if '1' <= board[i][j] && board[i][j] <= '9' {
-				pos = int(board[i][j] - '1')
-				check[pos]++
-				if check[pos] > 1 {
-					return false
-				}
+	for i := 0; i < 9; i++ {
+		for j := 0; j < 9; j++ {
+			if board[i][j] == '.' {
+				continue
 			}
-		}
-	}
-	// check column
-	for i := 0; i < size; i++ {
-		check := make([]int, size)
-		for j := 0; j < size; j++ {
-			if '1' <= board[j][i] && board[j][i] <= '9' {
-				pos = int(board[j][i] - '1')
-				check[pos]++
-				if check[pos] > 1 {
-					return false
-				}
-			}
-		}
-	}
-	// check each box
-	for i := 0; i < size; i++ {
-		check := make([]int, size)
-		r := i % 3
-		c := i / 3
-		for rp := r * 3; rp <= r*3+2; rp++ {
-			for cp := c * 3; cp <= c*3+2; cp++ {
-				if '1' <= board[cp][rp] && board[cp][rp] <= '9' {
-					pos = int(board[cp][rp] - '1')
-					check[pos]++
-					if check[pos] > 1 {
-						return false
-					}
-				}
+			pos = int(board[i][j] - '1')
+			rows[i][pos]++
+			cols[j][pos]++
+			box[((i/3)*3)+(j/3)][pos]++
+			if rows[i][pos] > 1 || cols[j][pos] > 1 || box[((i/3)*3)+(j/3)][pos] > 1 {
+				return false
 			}
 		}
 	}
