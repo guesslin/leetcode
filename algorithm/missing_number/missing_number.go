@@ -6,12 +6,12 @@ import (
 
 // 要線性時間，所以不可以用 sort 來做排序
 func missingNumber(nums []int) int {
-	n := len(nums)
-	sum := (n + 1) * n / 2
-	for _, c := range nums {
-		sum -= c
+	res := len(nums)
+	for i, c := range nums {
+		res = res ^ i
+		res = res ^ c
 	}
-	return sum
+	return res
 }
 
 func main() {
