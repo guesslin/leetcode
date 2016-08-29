@@ -10,33 +10,37 @@ func longestConsecutive(nums []int) int {
 	if len(nums) <= 1 {
 		return len(nums)
 	}
-	sort.Sort(sort.IntSlice(nums))
-	max := 1
-	cur := 1
-	pre := nums[0]
-	for i := 1; i < len(nums); i++ {
-		if nums[i] == pre {
-			continue
-		} else if nums[i] == pre+1 {
-			cur++
-			pre = nums[i]
-		} else {
-			if max < cur {
-				max = cur
-			}
-			cur = 1
-			pre = nums[i]
+	record := make(map[int]int)
+	for _, c := range nums {
+		if _, ok := record[c]; !ok {
+			record[c]++
 		}
 	}
-	if max < cur {
-		max = cur
+	cur := 0
+	res := 0
+	for len(record) != 0 {
+		k := 0
+		for k = range record {
+			break
+		}
+		for ; record[k+cur] != 0; cur++ {
+			delete(record, k+cur)
+		}
+		for i := 1; record[k-i] != 0; i++ {
+			cur++
+			delete(record, k-i)
+		}
+		if res < cur {
+			res = cur
+		}
+		cur = 0
 	}
-
-	return max
+	return res
 }
 
 func main() {
 	nums := []int{200, 1, 2, 4, 5, 3, 201}
 	fmt.Println(longestConsecutive(nums))
+	sort.Sort(sort.IntSlice(nums))
 	fmt.Println(nums)
 }
