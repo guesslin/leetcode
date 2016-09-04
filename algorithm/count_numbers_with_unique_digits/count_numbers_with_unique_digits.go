@@ -11,14 +11,16 @@ func countNumbersWithUniqueDigits(n int) int {
 	if n > 9 {
 		n = 9
 	}
-	last, cache, prod := 0, 0, 1
+	res := make([]int, n+1)
+	res[0] = 10
+	p := 9
+	sum := 10
 	for i := 1; i <= n; i++ {
-		cache = i * prod
-		cache += last
-		last = cache
-		prod *= (10 - i)
+		res[i] = p * (10 - i)
+		p *= (10 - i)
+		sum += res[i]
 	}
-	return 10*prod + cache
+	return sum
 }
 
 func main() {
