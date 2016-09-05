@@ -16,3 +16,31 @@ func BiSearch(nums []int, target int) int {
 	}
 	return -1
 }
+
+// UpperBound return the number of element is smaller or equal than target in list
+func UpperBound(nums []int, target int) int {
+	s, e := 0, len(nums)-1
+	for s <= e {
+		mid := (s + e) / 2
+		if nums[mid] > target {
+			e = mid - 1
+		} else {
+			s = mid + 1
+		}
+	}
+	return s
+}
+
+// LowerBound return the number of element is smaller than target in list
+func LowerBound(nums []int, target int) int {
+	s, e := 0, len(nums)-1
+	for s <= e {
+		mid := (s + e) / 2
+		if nums[mid] >= target {
+			e = mid - 1
+		} else {
+			s = mid + 1
+		}
+	}
+	return s
+}
