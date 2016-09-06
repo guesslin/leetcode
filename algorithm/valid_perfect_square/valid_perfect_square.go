@@ -5,16 +5,31 @@ import (
 )
 
 func isPerfectSquare(num int) bool {
-	level := 1
-	for num > 0 {
-		num -= level
-		level += 2
+	if num <= 0 {
+		return false
 	}
-	return num == 0
+	if num == 1 {
+		return true
+	}
+	lo, hi := 1, num/2+1
+	for lo <= hi {
+		mid := (lo + hi) / 2
+		if mid*mid == num {
+			return true
+		} else if mid*mid > num {
+			hi = mid - 1
+		} else {
+			lo = mid + 1
+		}
+	}
+
+	return false
 }
 
 func main() {
 	for i := 0; i < 101; i++ {
-		fmt.Println(i, "isPerfectSquare:", isPerfectSquare(i))
+		if isPerfectSquare(i) {
+			fmt.Println(i, "isPerfectSquare")
+		}
 	}
 }
