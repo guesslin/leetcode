@@ -5,30 +5,20 @@ import (
 )
 
 func isHappy(n int) bool {
-	var record []int
-	sum := 0
+	record := make(map[int]bool)
 	for n != 1 {
+		sum := 0
 		for n != 0 {
 			sum += square(n % 10)
 			n /= 10
 		}
 		n = sum
-		sum = 0
-		if found(record, n) {
+		if _, ok := record[n]; ok {
 			return false
 		}
-		record = append(record, n)
+		record[n] = true
 	}
 	return true
-}
-
-func found(space []int, num int) bool {
-	for _, item := range space {
-		if item == num {
-			return true
-		}
-	}
-	return false
 }
 
 func square(n int) int {
