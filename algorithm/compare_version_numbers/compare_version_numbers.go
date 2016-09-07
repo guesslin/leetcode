@@ -2,21 +2,26 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 )
 
+func buildVersionList(version string) []int {
+	res := make([]int, 0)
+	num := 0
+	for i := 0; i < len(version); i++ {
+		if version[i] == '.' {
+			res = append(res, num)
+			num = 0
+		} else {
+			num = num*10 + int(version[i]-'0')
+		}
+	}
+	res = append(res, num)
+	return res
+}
+
 func compareVersion(version1 string, version2 string) int {
-	sep := "."
-	var v1n, v2n []int
-	for _, v := range strings.Split(version1, sep) {
-		tmp, _ := strconv.Atoi(v)
-		v1n = append(v1n, tmp)
-	}
-	for _, v := range strings.Split(version2, sep) {
-		tmp, _ := strconv.Atoi(v)
-		v2n = append(v2n, tmp)
-	}
+	v1n := buildVersionList(version1)
+	v2n := buildVersionList(version2)
 	l1 := len(v1n)
 	l2 := len(v2n)
 	length := l1
