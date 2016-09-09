@@ -21,7 +21,9 @@ public:
             for(auto ite:squares){
                 if(ite <= i) {
                     count[i] = min(count[i], count[i-ite]+1);
-                }
+                } else {
+			break;
+		}
             }
         }
         return count[n];
