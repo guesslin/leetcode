@@ -12,7 +12,7 @@ func rob(nums []int) int {
 	if houses == 1 {
 		return nums[0]
 	}
-	count := make([]int, houses+1)
+	count := make([]int, houses)
 	count[0] = nums[0]
 	count[1] = max(nums[0], nums[1])
 	for i := 2; i < houses; i++ {
