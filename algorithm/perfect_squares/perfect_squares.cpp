@@ -9,23 +9,17 @@ using std::min;
 
 class Solution {
 public:
-    int numSquares(int n) {
-        int maxSquare = int(sqrt(n));
-        vector<int> count(n+1, n+1);
-        vector<int> squares(maxSquare);
-        for(int i = 0; i < maxSquare; i++) {
-            squares[i] = (i+1)*(i+1);
-        }
-        count[0] = 0;
-        for(int i = 1; i <= n; i++){
-            for(auto ite:squares){
-                if(ite <= i) {
-                    count[i] = min(count[i], count[i-ite]+1);
-                } else {
-			break;
+	int numSquares(int n) {
+		vector<int> count(n+1, n+1);
+		count[0] = 0;
+		count[1] = 1;
+		for(int i = 2; i <= n; i++){
+			int a = 1;
+			while(a*a <= i) {
+				count[i] = min(count[i], count[i-a*a]+1);
+				a++;
+			}
 		}
-            }
-        }
-        return count[n];
-    }
+		return count[n];
+	}
 };
