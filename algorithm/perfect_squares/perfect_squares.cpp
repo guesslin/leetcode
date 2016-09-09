@@ -9,17 +9,18 @@ using std::min;
 
 class Solution {
 public:
-	int numSquares(int n) {
-		vector<int> count(n+1, n+1);
-		count[0] = 0;
-		count[1] = 1;
-		for(int i = 2; i <= n; i++){
-			int a = 1;
-			while(a*a <= i) {
-				count[i] = min(count[i], count[i-a*a]+1);
-				a++;
-			}
-		}
-		return count[n];
-	}
+    int numSquares(int n) {
+        static vector<int> count({0});
+        while(count.size() <= unsigned(n)) {
+            int m = count.size();
+            int currentMin = m;
+            for (int i = 1; i*i <= m; i++)
+            {
+                currentMin = min(currentMin, count[m - i*i] + 1);
+            }
+            count.push_back(currentMin);
+            
+        }
+        return count[n];
+    }
 };
