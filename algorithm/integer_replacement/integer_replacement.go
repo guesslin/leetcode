@@ -11,6 +11,9 @@ func integerReplacement(n int) int {
 	if n%2 == 0 {
 		return 1 + integerReplacement(n/2)
 	}
+	if n == 2147483647 { // in case of 32 signed int overflow problem
+		return min(1+integerReplacement(n-1), 2+(integerReplacement(((n-1)/2)+1)))
+	}
 	return 1 + min(integerReplacement(n+1), integerReplacement(n-1))
 }
 
