@@ -5,33 +5,17 @@ import (
 )
 
 func searchMatrix(matrix [][]int, target int) bool {
-	loRow, hiRow := 0, len(matrix)-1
-	for loRow <= hiRow {
-		midRow := loRow + (hiRow-loRow)/2
-		if matrix[midRow][0] == target {
-			return true
-		}
-		if matrix[midRow][0] > target {
-			hiRow = midRow - 1
-		} else {
-			loRow = midRow + 1
-		}
+	var nums []int
+	for i := range matrix {
+		nums = append(nums, matrix[i]...)
 	}
-	if hiRow < 0 {
-		return false
-	}
-	if loRow == len(matrix) {
-		loRow -= 1
-	}
-	lo, hi := 0, len(matrix[loRow])-1
-	row := matrix[hiRow]
-	fmt.Println(row)
+	lo, hi := 0, len(nums)-1
 	for lo <= hi {
 		mid := lo + (hi-lo)/2
-		if row[mid] == target {
+		if nums[mid] == target {
 			return true
 		}
-		if row[mid] > target {
+		if nums[mid] > target {
 			hi = mid - 1
 		} else {
 			lo = mid + 1
