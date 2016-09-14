@@ -5,17 +5,16 @@ import (
 )
 
 func searchMatrix(matrix [][]int, target int) bool {
-	var nums []int
-	for i := range matrix {
-		nums = append(nums, matrix[i]...)
-	}
-	lo, hi := 0, len(nums)-1
+	row, col := len(matrix), len(matrix[0])
+	lo, hi := 0, row*col-1
 	for lo <= hi {
 		mid := lo + (hi-lo)/2
-		if nums[mid] == target {
+		r := mid / col
+		c := mid % col
+		if matrix[r][c] == target {
 			return true
 		}
-		if nums[mid] > target {
+		if matrix[r][c] > target {
 			hi = mid - 1
 		} else {
 			lo = mid + 1
