@@ -5,30 +5,24 @@ import (
 )
 
 func canCompleteCircuit(gas []int, cost []int) int {
-	diff := make([]int, len(gas))
-	sumOfGas, sumOfCost := 0, 0
-	for i := range diff {
-		diff[i] = gas[i] - cost[i] // gas - cost => how much gas left while arrive next gas station
-		sumOfGas += gas[i]
-		sumOfCost += cost[i]
+	lo, hi, sum := 0, len(gas)-1, 0
+	for lo < hi {
+		if sum > 0 {
+			sum += gas[lo] - cost[lo]
+			lo++
+		} else {
+			sum += gas[hi] - cost[hi]
+			hi--
+		}
 	}
-	if sumOfCost > sumOfGas {
+	sum += gas[lo] - cost[lo]
+	if sum < 0 {
 		return -1
 	}
-	stations := len(gas)
-	for i := 0; i < stations; i++ {
-		restGas := 0
-		for j := 0; j < stations; j++ {
-			restGas += diff[(i+j)%stations]
-			if restGas < 0 {
-				break
-			}
-		}
-		if restGas >= 0 {
-			return i
-		}
+	if gas[lo]-cost[lo] >= 0 {
+		return lo
 	}
-	return -1
+	return lo + 1
 }
 
 func main() {
