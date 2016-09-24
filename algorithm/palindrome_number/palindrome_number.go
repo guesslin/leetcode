@@ -8,11 +8,19 @@ func isPalindrome(x int) bool {
 	if x < 0 {
 		return false
 	}
-	orix := x
-	a := 0
+	if x < 10 {
+		return true
+	}
+	if x%10 == 0 {
+		return false
+	}
+	orix, a := x, 0
 	for x > 0 {
 		a = a*10 + x%10
 		x = x / 10
+		if a == x {
+			return true
+		}
 	}
 	return a == orix
 }
