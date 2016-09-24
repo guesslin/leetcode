@@ -5,6 +5,9 @@ import (
 )
 
 func isPalindrome(x int) bool {
+	if x < 0 {
+		return false
+	}
 	orix := x
 	a := 0
 	for x > 0 {
@@ -14,10 +17,7 @@ func isPalindrome(x int) bool {
 			return true
 		}
 	}
-	if a == orix {
-		return true
-	}
-	return false
+	return a == orix
 }
 
 func main() {
