@@ -13,14 +13,14 @@ func isPalindrome(x int) bool {
 	for x > 0 {
 		a = a*10 + x%10
 		x = x / 10
-		if a == x {
-			return true
-		}
 	}
 	return a == orix
 }
 
 func main() {
+	fmt.Println("11000", isPalindrome(11000))
+	fmt.Println("131000", isPalindrome(131000))
+	fmt.Println("10", isPalindrome(10))
 	fmt.Println("1001", isPalindrome(1001))
 	fmt.Println("10101", isPalindrome(10101))
 	fmt.Println("999", isPalindrome(999))
