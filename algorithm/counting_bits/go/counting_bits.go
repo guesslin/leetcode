@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// resend AC in 2102 ms
 func countBits(num int) []int {
 	result := make([]int, num+1)
 	if num == 0 {
