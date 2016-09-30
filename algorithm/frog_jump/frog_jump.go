@@ -20,7 +20,7 @@ func canCross(stones []int) bool {
 	maxStone := 1
 	stonesMap[1][1] = true
 	for i := 1; i < len(stones); i++ {
-		if i > maxStone {
+		if stones[i] > maxStone {
 			break
 		}
 		for k, _ := range stonesMap[stones[i]] {
