@@ -49,4 +49,11 @@ func main() {
 	} else {
 		fmt.Println("Frog can NOT cross the river!")
 	}
+	stones2 := []int{0, 1, 3, 6, 10, 13, 15, 18}
+	fmt.Println(stones2)
+	if canCross(stones2) {
+		fmt.Println("Frog can cross the river!")
+	} else {
+		fmt.Println("Frog can NOT cross the river!")
+	}
 }
