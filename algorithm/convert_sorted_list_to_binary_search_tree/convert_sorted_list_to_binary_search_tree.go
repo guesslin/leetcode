@@ -15,26 +15,38 @@ func sortedListToBST(head *ListNode) *TreeNode {
 	if head == nil {
 		return nil
 	}
-	root := TreeNode{Val: 0}
-	queue := make([]*TreeNode, 0)
-	queue = append(queue, &root)
-	l := head.Next
-	var cur *TreeNode
-	for l != nil {
-		cur, queue = queue[0], queue[1:]
-		if l != nil {
-			cur.Left = &TreeNode{Val: 0}
-			queue = append(queue, cur.Left)
-			l = l.Next
-		}
-		if l != nil {
-			cur.Right = &TreeNode{Val: 0}
-			queue = append(queue, cur.Right)
-			l = l.Next
-		}
+	nums := make([]int, 0)
+	for cur := head; cur != nil; cur = cur.Next {
+		nums = append(nums, cur.Val)
 	}
-	buildTreeDFS(&root, head)
-	return &root
+	return sortedArrayToBST(nums)
+}
+
+func sortedArrayToBST(nums []int) *TreeNode {
+	if len(nums) == 0 {
+		return nil
+	}
+	nodes := make([]TreeNode, len(nums))
+	for i := 0; i < len(nums); i++ {
+		nodes[i].Val = nums[i]
+	}
+	lo, hi := 0, len(nums)-1
+	mid := (lo + hi) / 2
+	root := &nodes[mid]
+	root.Left = buildTree(nodes, lo, mid-1)
+	root.Right = buildTree(nodes, mid+1, hi)
+	return root
+}
+
+func buildTree(nodes []TreeNode, lo, hi int) *TreeNode {
+	if lo > hi {
+		return nil
+	}
+	mid := (lo + hi) / 2
+	root := &nodes[mid]
+	root.Left = buildTree(nodes, lo, mid-1)
+	root.Right = buildTree(nodes, mid+1, hi)
+	return root
 }
 
 func buildTreeDFS(root *TreeNode, head *ListNode) *ListNode {
