@@ -30,19 +30,13 @@ func maximalSquare(matrix [][]byte) int {
 			curVal := int(matrix[row][col] - '0')
 			curUp := curVal
 			curArea := 0
-			if col-1 >= 0 && curVal > 0 && record[row-1][col].upper >= record[row-1][col-1].sqrtArea &&
-				curRight >= record[row-1][col-1].sqrtArea {
-				curArea = record[row-1][col-1].sqrtArea + 1
-			} else if curVal > 0 && curRight > 0 && record[row-1][col].upper > 0 && record[row-1][col-1].sqrtArea > 0 {
-				curArea = min(curRight, record[row-1][col].upper, record[row-1][col-1].sqrtArea) + 1
-			} else {
+			if curVal == 0 || col-1 < 0 {
+				curRight = curVal
 				curArea = curVal
-			}
-			if curVal > 0 {
+			} else {
+				curArea = min(curRight, record[row-1][col].upper, record[row-1][col-1].sqrtArea) + 1
 				curUp += record[row-1][col].upper
 				curRight++
-			} else {
-				curRight = 0
 			}
 			record[row] = append(record[row], Node{sqrtArea: curArea, upper: curUp})
 			if curArea > maxArea {
@@ -102,4 +96,12 @@ func main() {
 		fmt.Println(string(r))
 	}
 	fmt.Println(maximalSquare(matrix3))
+	matrix4 := [][]byte{
+		[]byte("11"),
+		[]byte("11"),
+	}
+	for _, r := range matrix4 {
+		fmt.Println(string(r))
+	}
+	fmt.Println(maximalSquare(matrix4))
 }
