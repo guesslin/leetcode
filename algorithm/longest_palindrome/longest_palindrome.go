@@ -5,9 +5,11 @@ func longestPalindrome(s string) int {
 	maxPalin := 0
 	for _, c := range []byte(s) {
 		chars[c]++
-		if chars[c] == 2 {
-			maxPalin += 2
-			delete(chars, c)
+	}
+	for k, v := range chars {
+		maxPalin += v / 2 * 2
+		if v%2 == 0 {
+			delete(chars, k)
 		}
 	}
 	if len(chars) > 0 {
