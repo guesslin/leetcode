@@ -5,20 +5,23 @@ import (
 )
 
 func isIsomorphic(s string, t string) bool {
-	mapping := make(map[byte]byte)
+	if len(s) != len(t) {
+		return false
+	}
+	record := make(map[byte]byte)
 	for i := 0; i < len(s); i++ {
-		if mapping[s[i]] == 0 {
-			mapping[s[i]] = t[i]
-		} else if mapping[s[i]] != t[i] {
+		if c, ok := record[s[i]]; ok && c != t[i] {
 			return false
+		} else {
+			record[s[i]] = t[i]
 		}
 	}
-	mapping2 := make(map[byte]byte)
+	record2 := make(map[byte]byte)
 	for i := 0; i < len(t); i++ {
-		if mapping2[t[i]] == 0 {
-			mapping2[t[i]] = s[i]
-		} else if mapping2[t[i]] != s[i] {
+		if c, ok := record2[t[i]]; ok && c != s[i] {
 			return false
+		} else {
+			record2[t[i]] = s[i]
 		}
 	}
 	return true
