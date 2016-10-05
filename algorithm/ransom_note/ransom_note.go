@@ -5,16 +5,13 @@ import (
 )
 
 func canConstruct(ransomNote string, magazine string) bool {
-	need := make([]int, 26)
-	has := make([]int, 26)
-	for i := 0; i < len(ransomNote); i++ {
-		need[int(ransomNote[i]-'a')]++
+	have := make([]int, 26)
+	for _, c := range []byte(magazine) {
+		have[int(c-'a')]++
 	}
-	for i := 0; i < len(magazine); i++ {
-		has[int(magazine[i]-'a')]++
-	}
-	for i := 0; i < 26; i++ {
-		if need[i] > has[i] {
+	for _, c := range []byte(ransomNote) {
+		have[int(c-'a')]--
+		if have[int(c-'a')] < 0 {
 			return false
 		}
 	}
