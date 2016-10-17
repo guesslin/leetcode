@@ -15,6 +15,9 @@ func Solution(A []int) int {
 			cur++
 		} else {
 			count += cur
+			if count > 1000000000 {
+				return -1
+			}
 		}
 	}
 	return count
