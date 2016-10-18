@@ -17,12 +17,8 @@ func canCross(stones []int) bool {
 	if _, ok := stonesMap[1]; !ok {
 		return false
 	}
-	maxStone := 1
 	stonesMap[1][1] = true
 	for i := 1; i < len(stones); i++ {
-		if stones[i] > maxStone {
-			break
-		}
 		for k, _ := range stonesMap[stones[i]] {
 			if _, ok := stonesMap[stones[i]+k-1]; ok && (k-1) > 0 {
 				stonesMap[stones[i]+k-1][k-1] = true
@@ -33,12 +29,12 @@ func canCross(stones []int) bool {
 			if _, ok := stonesMap[stones[i]+k+1]; ok {
 				stonesMap[stones[i]+k+1][k+1] = true
 			}
-			if stones[i]+k+1 > maxStone {
-				maxStone = stones[i] + k + 1
-			}
+		}
+		if len(stonesMap[stones[len(stones)-1]]) > 0 {
+			return true
 		}
 	}
-	return len(stonesMap[stones[len(stones)-1]]) > 0
+	return false
 }
 
 func main() {
