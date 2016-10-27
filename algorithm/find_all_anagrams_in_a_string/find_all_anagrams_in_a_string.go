@@ -5,23 +5,20 @@ func findAnagrams(s string, p string) []int {
 	if len(s) < len(p) {
 		return res
 	}
-	pMemo := make(map[byte]int)
-	sMemo := make(map[byte]int)
+	var pMemo [26]int
+	var sMemo [26]int
 	for _, c := range []byte(p) {
-		pMemo[c]++
+		pMemo[int(c-'a')]++
 	}
 	for i, c := range []byte(s) {
 		if i < len(p) {
-			sMemo[c]++
+			sMemo[int(c-'a')]++
 		} else {
 			if isEqual(sMemo, pMemo) {
 				res = append(res, i-len(p))
 			}
-			sMemo[c]++
-			sMemo[s[i-len(p)]]--
-			if sMemo[s[i-len(p)]] == 0 {
-				delete(sMemo, s[i-len(p)])
-			}
+			sMemo[int(c-'a')]++
+			sMemo[int(s[i-len(p)]-'a')]--
 		}
 	}
 	if isEqual(sMemo, pMemo) {
@@ -30,12 +27,9 @@ func findAnagrams(s string, p string) []int {
 	return res
 }
 
-func isEqual(s, p map[byte]int) bool {
-	if len(s) != len(p) {
-		return false
-	}
-	for k, v := range p {
-		if s[k] != v {
+func isEqual(s, p [26]int) bool {
+	for i := 0; i < 26; i++ {
+		if s[i] != p[i] {
 			return false
 		}
 	}
