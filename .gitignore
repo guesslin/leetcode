@@ -4,3 +4,4 @@
 *.core
 ~*
 *.swp
+.DS_Store
