@@ -68,4 +68,39 @@ func main() {
 			fmt.Printf("Correct \"%s\", %v\n", c.input, res)
 		}
 	}
+
+	fmt.Println("===== numbers =====")
+
+	testCases2 := []struct {
+		inputN   int
+		expected bool
+	}{
+		{inputN: 1231, expected: false},
+		{inputN: 1221, expected: true},
+		{inputN: 12321, expected: true},
+	}
+	for _, c := range testCases2 {
+		res := isPalindrome2(c.inputN)
+		if res != c.expected {
+			fmt.Printf("Wrong while running \"%d\", expect %v, get %v\n", c.inputN, c.expected, res)
+		} else {
+			fmt.Printf("Correct \"%d\", %v\n", c.inputN, res)
+		}
+	}
+}
+
+func isPalindrome2(in int) bool {
+	n := 0
+	for n < in {
+		n = n*10 + in%10
+		if in == n {
+			return true
+		}
+		in = in / 10
+		if in == n {
+			return true
+		}
+	}
+
+	return in == n
 }
